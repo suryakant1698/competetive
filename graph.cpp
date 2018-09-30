@@ -34,16 +34,22 @@ void Graph::print()
 void Graph::BFS(int v)
 {
 	bool visited[V];
+	int dist[V];
+	for(int i=0;i<V;i++)
+	dist[i]=std::numeric_limits<int>::max();
+	dist[v]=0;
 	for(int i=0;i<V;i++)
 	visited[i]=false;
 	visited[v]=true;
 	queue<int> nodes;
 	nodes.push(v);
 	cout<<v<<" ";
+	int count=0;
 	while(!nodes.empty())
 	{
 		v=nodes.front();
 		nodes.pop();
+		count++;
 		for(int i=0;i<edge[v].size();i++)
 		{
 			if(!visited[edge[v][i]])
@@ -51,9 +57,12 @@ void Graph::BFS(int v)
 				nodes.push(edge[v][i]);
 				cout<<edge[v][i]<<" ";
 				visited[edge[v][i]]=true;
+				dist[edge[v][i]]=min(dist[v]+1,dist[edge[v][i]]);
 			}
 		}
 	}
+		for(int i=0;i<V;i++)
+	cout<<dist[i]<<endl;
 }
 void Graph::DFS(int s)
 {
@@ -84,5 +93,8 @@ int main()
 	g.addEdge(2,0);
 	g.addEdge(2,3);
 	g.addEdge(3,3);
-	g.DFS(2);
+	//g.DFS(2);
+	int a = std::numeric_limits<int>::max();
+	g.BFS(2);
+	cout<<"\n"<<a;
 }
